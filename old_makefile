@@ -1,0 +1,14 @@
+HOME = /home/u2/mendoza
+SLLPATH = $(HOME)/repositories/selalib/
+FTOPY = $(HOME)/.conda/envs/slmp/bin/f2py
+FTOPYFLAGS = -c  --f90flags="-O3 -fPIC -cpp" --fcompiler=gfortran
+
+INCLUDE = -I$(SLLPATH)/build/include/
+LIB_DIR =  -I$(SLLPATH)/build/modules/
+LIB =  -l$(SLLPATH)/build/package/libselalib
+
+all:
+	$(FTOPY) $(FTOPYFLAGS) $(INCLUDE) $(LIB_DIR) $(LIB)  -m selalib_interpol selalib_wrapper.f90
+
+cleanall:
+	@rm -f *.o *~ *.mod *.a *.so
