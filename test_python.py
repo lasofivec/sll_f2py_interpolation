@@ -1,4 +1,4 @@
-import sll_interpol as my
+import selalib_interpol as my
 import numpy as np
 
 NPTS1 = 129
