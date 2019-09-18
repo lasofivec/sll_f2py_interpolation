@@ -32,7 +32,7 @@ contains
     !f2py real*8, intent(in), dimension(N1, N2) :: data_in
     !--------------------------------------------------------
 
-    call spline%initialize(N1,N2, &
+    call spline%init(N1,N2, &
          0.0_f64,1.0_f64,0.0_f64,1.0_f64,&
          sll_p_hermite, sll_p_hermite, &
          eta1_min_slopes=eta1_slopes(1, :), &
@@ -70,7 +70,7 @@ contains
     !--------------------------------------------------------
 
     data_out(:,:) = 0._f64
-    call spline%initialize(N1,N2, &
+    call spline%init(N1,N2, &
          0.0_f64,1.0_f64,0.0_f64,1.0_f64,&
          sll_p_hermite, sll_p_hermite, &
          eta1_min_slopes=eta1_slopes(1, :), &

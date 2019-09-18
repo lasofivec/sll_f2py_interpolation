@@ -4,7 +4,7 @@ FTOPYFLAGS = -c  --f90flags="-O3 -fPIC -cpp" --fcompiler=gfortran
 
 INCLUDE = -I$(SLLPATH)/build/include/
 LIB_DIR =  -I$(SLLPATH)/build/modules/
-LIB =  -lselalib
+LIB =  # -lselalib
 
 all:
 	$(FTOPY) $(FTOPYFLAGS) $(INCLUDE) $(LIB_DIR) $(LIB)  -m selalib_interpol selalib_wrapper.f90
