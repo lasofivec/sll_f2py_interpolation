@@ -1,13 +1,54 @@
-SLLPATH = /home/u2/mendoza/repositories/selalib/
-FTOPY = /home/u2/mendoza/.conda/envs/slmp/bin/f2py
-FTOPYFLAGS = -c  --f90flags="-O3 -fPIC -cpp" --fcompiler=gfortran
+# AUTHOR: Yaman Güçlü - IPP Garching
+#
+# NOTE:
+# . This file is in "selalib/package"
+# . At build time, "selalib.inc" is generated inside "<BUILD_DIR>/package"
+# . Upon installation, both files are copied to "<INSTALL_DIR>/pkg_info/selalib"
+#
+# USAGE:
+# . Build and install SeLaLib (see manual)
+# . Copy "makefile_template" and "selalib.inc" to your project directory
+# . Rename "makefile_template" as "makefile" (or "Makefile")
+# . Update the variables SOURCES and EXECUTABLE, and possibly other flags
+# . Upon "make", your project will be correctly built and linked against SeLaLib
 
-INCLUDE = -I$(SLLPATH)/build/include/
-LIB_DIR =  -I$(SLLPATH)/build/modules/
-LIB =  # -lselalib
+#===============================================================================
+# PROJECT information provided by user
+#===============================================================================
+SOURCES    =  selalib_wrapper.f90 # MANDATORY: Fortran sources
+EXECUTABLE =  selalib_interpol # MANDATORY: Executable name
+HOME = /home/u2/mendoza
+SLLPATH = $(HOME)/repositories/selalib/
+FCFLAGS    =  -fPIC -c # OPTIONAL : Fortran compiler flags
+LDFLAGS    =  # OPTIONAL : Linker flags
+LIBS       =  # OPTIONAL : Libraries to link
 
-all:
-	$(FTOPY) $(FTOPYFLAGS) $(INCLUDE) $(LIB_DIR) $(LIB)  -m selalib_interpol selalib_wrapper.f90
+#===============================================================================
+# Link project to SELALIB: include path and library list (do not change this)
+#===============================================================================
+include selalib.inc
 
-cleanall:
-	@rm -f *.o *~ *.mod *.a *.so
+
+FCFLAGS := $(FCFLAGS) -I$(SLL_INCLUDE_PATH)
+LIBS := $(LIBS) $(SLL_LIB) $(SLL_EXT) $(SLL_DEPS)
+
+#==============================================================================
+# Standard targets: make, make all, make clean
+#==============================================================================
+OBJECTS = $(SOURCES:.F90=.o)
+
+all: $(SOURCES) $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS)
+	$(FC) $(FCFLAGS) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $@
+
+%.o: %.F90
+	$(FC) $(FCFLAGS) -c $<
+%.o: %.f90
+	$(FC) $(FCFLAGS) -c $<
+
+print-%  : ; @echo $* = $($*)
+
+.PHONY: clean
+clean:
+	$(RM) $(EXECUTABLE) *.o *.mod
