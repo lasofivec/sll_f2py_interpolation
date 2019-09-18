@@ -32,7 +32,7 @@ for j in range(NPTS2):
 data_out = my.mp_int.interpolate_2d(data_in, X, Y, eta1_slopes, eta2_slopes)
 
 
-print "=== Error = ", np.amax(abs(data_out-cos(2.0*pi*X)*sin(2.0*pi*Y)))
+print("=== Error = ", np.amax(abs(data_out-cos(2.0*pi*X)*sin(2.0*pi*Y))))
 
 # X,Y = np.meshgrid(eta1, eta2)
 # import pylab as pl
@@ -78,9 +78,9 @@ pl.contourf(X,Y, data_in)
 pl.title("Rho (cad datain)")
 pl.axis('equal')
 
-print " DATA_OUT VALUES "
-print "MAX VAL = ", np.max(data_out)
-print "MIN VAL = ", np.min(data_out)
+print(" DATA_OUT VALUES ")
+print("MAX VAL = ", np.max(data_out))
+print("MIN VAL = ", np.min(data_out))
 X,Y = np.meshgrid(eta1, eta2)
 import matplotlib.pyplot as pl
 pl.subplot(1,3,1)
@@ -101,4 +101,4 @@ pl.colorbar()
 pl.show(block=True)
 
 
-print "ERROR = ", np.amax(np.abs(data_out+data_ex))
+print("ERROR = ", np.amax(np.abs(data_out+data_ex)))
